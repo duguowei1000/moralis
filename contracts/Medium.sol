@@ -17,7 +17,7 @@ contract Medium is ERC721,ERC721URIStorage, Ownable{
         string memory symbol_,
         uint256 fees_
 
-    )ERC721(name_, symbol_){
+    ) ERC721(name_, symbol_){
         fees = fees_;
     }
     function safeMint(address to,string memory uri) public payable{
@@ -37,5 +37,23 @@ contract Medium is ERC721,ERC721URIStorage, Ownable{
         if(contractBalance>0){
             payable(msg.sender).transfer(address(this).balance);
         }
+    }
+
+        // Override Functions
+
+    function _burn(uint256 tokenId)
+        internal
+        override(ERC721, ERC721URIStorage)
+    {
+        super._burn(tokenId);
+    }
+
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (string memory)
+    {
+        return super.tokenURI(tokenId);
     }
 }
